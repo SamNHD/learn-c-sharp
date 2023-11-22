@@ -13,45 +13,45 @@ import CheckboxGroup from "../../checkboxGroup/CheckboxGroup";
 
 const GENDER_OPTIONS = [
   {
-    value: "male",
+    value: 111,
     label: "Male",
   },
   {
-    value: "female",
+    value: 112,
     label: "Female",
   },
   {
-    value: "other",
+    value: 113,
     label: "Other",
   },
 ];
 
 const ETHNICITY_OPTIONS = [
   {
-    value: "kinh",
+    value: 121,
     label: "Kinh",
   },
   {
-    value: "khmer",
+    value: 122,
     label: "Khmer",
   },
   {
-    value: "none",
+    value: 123,
     label: "None",
   },
 ];
 
 const CODE_LANGUAGES = [
   {
-    value: "c#",
+    value: 131,
     label: "C#",
   },
   {
-    value: "c++",
+    value: 132,
     label: "C++",
   },
   {
-    value: "java",
+    value: 133,
     label: "Java",
   },
 ];
@@ -60,26 +60,59 @@ class RegisterForm extends BaseConsumer {
   constructor(props) {
     super(props);
     this.state = {
-      confirmPassword: "",
       error: "",
     };
-    this.setConfirmPassword = this.setConfirmPassword.bind(this);
-  }
-  _onChangeValue(name, e) {
-    this.updateObject(this.props.registerForm, { [name]: e.target.value });
-  }
-  setConfirmPassword(e) {
-    this.setState({ confirmPassword: e.target.value });
   }
 
-  _onChangeCodeLanguages = (e) => {
-    this.updateObject(this.props.registerForm.codeLanguages, {
-      [e.target.name]: e.target.checked,
+  _onChangeUsername = (e) => {
+    this.updateObject(this.props.registerForm, { username: e.target.value });
+  };
+
+  _onChangeName = (e) => {
+    this.updateObject(this.props.registerForm, { name: e.target.value });
+  };
+
+  _onChangeGender = (e) => {
+    this.updateObject(this.props.registerForm, { gender: +e.target.value });
+  };
+
+  _onChangeEthnicity = (e) => {
+    this.updateObject(this.props.registerForm, { ethnicity: e.target.value });
+  };
+
+  _onChangePassword = (e) => {
+    this.updateObject(this.props.registerForm, { password: e.target.value });
+  };
+
+  _onChangeConfirmPassword = (e) => {
+    this.updateObject(this.props.registerForm, {
+      confirmPassword: e.target.value,
     });
   };
 
+  _onChangeCodeLanguages = (e) => {
+    const { codeLanguages } = this.props.registerForm;
+    if (e.target.checked) {
+      this.addElement(codeLanguages, +e.target.name);
+    } else {
+      this.removeElement(
+        codeLanguages,
+        codeLanguages.find((item) => item === +e.target.name)
+      );
+    }
+  };
+
+  _onChangeEmail = (e) => {
+    this.updateObject(this.props.registerForm, { email: e.target.value });
+  };
+
+  _onChangeNotes = (e) => {
+    this.updateObject(this.props.registerForm, { notes: e.target.value });
+  };
+
   _onSubmit = () => {
-    const { username, name, gender, password } = this.props.registerForm;
+    const { username, name, gender, password, confirmPassword } =
+      this.props.registerForm;
     if (!username || !name || !gender || !password) {
       this.setState({ error: "Please fill all required fields" });
       return;
@@ -88,13 +121,18 @@ class RegisterForm extends BaseConsumer {
       this.setState({ error: "Password at least 6 characters" });
       return;
     }
-    if (this.state.confirmPassword !== password) {
+    if (confirmPassword !== password) {
       this.setState({ error: "Password not match" });
       return;
     }
 
     this.setState({ error: "" });
     console.log("submit", this.props.registerForm);
+  };
+
+  _getOnChangeFunc = () => {
+    let f = () => {};
+    return f;
   };
 
   consumerContent() {
@@ -104,6 +142,7 @@ class RegisterForm extends BaseConsumer {
       gender,
       ethnicity,
       password,
+      confirmPassword,
       codeLanguages,
       email,
       notes,
@@ -119,7 +158,7 @@ class RegisterForm extends BaseConsumer {
                 root: "register-from-item-input",
               }}
               value={username}
-              onChange={(e) => this._onChangeValue("username", e)}
+              onChange={this._onChangeUsername}
             />
           </div>
           <div className="register-from-item">
@@ -129,16 +168,12 @@ class RegisterForm extends BaseConsumer {
                 root: "register-from-item-input",
               }}
               value={name}
-              onChange={(e) => this._onChangeValue("name", e)}
+              onChange={this._onChangeName}
             />
           </div>
           <div className="register-from-item">
             <TitleInput label="Gender" required />
-            <RadioGroup
-              row
-              value={gender}
-              onChange={(e) => this._onChangeValue("gender", e)}
-            >
+            <RadioGroup row value={gender} onChange={this._onChangeGender}>
               {GENDER_OPTIONS.map((option) => (
                 <FormControlLabel
                   key={option.value}
@@ -153,18 +188,15 @@ class RegisterForm extends BaseConsumer {
             <TitleInput label="Ethnicity" />
             <Select
               value={ethnicity}
-              onChange={(e) => this._onChangeValue("ethnicity", e)}
+              onChange={this._onChangeEthnicity}
               displayEmpty={true}
-              renderValue={(selected) => {
-                if (!selected) {
-                  return <em>Select Ethnicity</em>;
-                }
-
-                return selected;
-              }}
             >
               {ETHNICITY_OPTIONS.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+                  label={option.label}
+                >
                   {option.label}
                 </MenuItem>
               ))}
@@ -178,7 +210,7 @@ class RegisterForm extends BaseConsumer {
               }}
               type="password"
               value={password}
-              onChange={(e) => this._onChangeValue("password", e)}
+              onChange={this._onChangePassword}
             />
           </div>
           <div className="register-from-item">
@@ -188,8 +220,8 @@ class RegisterForm extends BaseConsumer {
                 root: "register-from-item-input",
               }}
               type="password"
-              value={this.state.confirmPassword}
-              onChange={this.setConfirmPassword}
+              value={confirmPassword}
+              onChange={this._onChangeConfirmPassword}
             />
           </div>
           <CheckboxGroup
@@ -207,7 +239,7 @@ class RegisterForm extends BaseConsumer {
                 root: "register-from-item-input",
               }}
               value={email}
-              onChange={(e) => this._onChangeValue("email", e)}
+              onChange={this._onChangeEmail}
             />
           </div>
           <div className="register-from-item">
@@ -219,7 +251,7 @@ class RegisterForm extends BaseConsumer {
               multiline
               minRows={2}
               value={notes}
-              onChange={(e) => this._onChangeValue("notes", e)}
+              onChange={this._onChangeNotes}
             />
           </div>
         </div>

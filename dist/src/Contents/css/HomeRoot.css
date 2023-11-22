@@ -39,6 +39,10 @@
   height: 32px;
 }
 
+.MuiInputBase-multiline {
+  height: unset;
+}
+
 .register-error {
   color: red;
   font-size: 12px;

@@ -32671,7 +32671,7 @@ var CheckboxGroup = /*#__PURE__*/function (_BaseConsumer) {
       }, options.map(function (option) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_FormControlLabel__WEBPACK_IMPORTED_MODULE_4__["default"], {
           control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Checkbox__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
-            checked: _this.props.value[option.value] || false,
+            checked: _this.props.value.includes(option.value) || false,
             name: option.value,
             color: "primary"
           }, others)),
@@ -32735,33 +32735,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var GENDER_OPTIONS = [{
-  value: "male",
+  value: 111,
   label: "Male"
 }, {
-  value: "female",
+  value: 112,
   label: "Female"
 }, {
-  value: "other",
+  value: 113,
   label: "Other"
 }];
 var ETHNICITY_OPTIONS = [{
-  value: "kinh",
+  value: 121,
   label: "Kinh"
 }, {
-  value: "khmer",
+  value: 122,
   label: "Khmer"
 }, {
-  value: "none",
+  value: 123,
   label: "None"
 }];
 var CODE_LANGUAGES = [{
-  value: "c#",
+  value: 131,
   label: "C#"
 }, {
-  value: "c++",
+  value: 132,
   label: "C++"
 }, {
-  value: "java",
+  value: 133,
   label: "Java"
 }];
 var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
@@ -32771,15 +32771,63 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
     var _this;
     _classCallCheck(this, RegisterForm);
     _this = _super.call(this, props);
+    _defineProperty(_assertThisInitialized(_this), "_onChangeUsername", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        username: e.target.value
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangeName", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        name: e.target.value
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangeGender", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        gender: +e.target.value
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangeEthnicity", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        ethnicity: e.target.value
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangePassword", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        password: e.target.value
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangeConfirmPassword", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        confirmPassword: e.target.value
+      });
+    });
     _defineProperty(_assertThisInitialized(_this), "_onChangeCodeLanguages", function (e) {
-      _this.updateObject(_this.props.registerForm.codeLanguages, _defineProperty({}, e.target.name, e.target.checked));
+      var codeLanguages = _this.props.registerForm.codeLanguages;
+      if (e.target.checked) {
+        _this.addElement(codeLanguages, +e.target.name);
+      } else {
+        _this.removeElement(codeLanguages, codeLanguages.find(function (item) {
+          return item === +e.target.name;
+        }));
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangeEmail", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        email: e.target.value
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "_onChangeNotes", function (e) {
+      _this.updateObject(_this.props.registerForm, {
+        notes: e.target.value
+      });
     });
     _defineProperty(_assertThisInitialized(_this), "_onSubmit", function () {
       var _this$props$registerF = _this.props.registerForm,
         username = _this$props$registerF.username,
         name = _this$props$registerF.name,
         gender = _this$props$registerF.gender,
-        password = _this$props$registerF.password;
+        password = _this$props$registerF.password,
+        confirmPassword = _this$props$registerF.confirmPassword;
       if (!username || !name || !gender || !password) {
         _this.setState({
           error: "Please fill all required fields"
@@ -32792,7 +32840,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
         });
         return;
       }
-      if (_this.state.confirmPassword !== password) {
+      if (confirmPassword !== password) {
         _this.setState({
           error: "Password not match"
         });
@@ -32803,35 +32851,25 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
       });
       console.log("submit", _this.props.registerForm);
     });
+    _defineProperty(_assertThisInitialized(_this), "_getOnChangeFunc", function () {
+      var f = function f() {};
+      return f;
+    });
     _this.state = {
-      confirmPassword: "",
       error: ""
     };
-    _this.setConfirmPassword = _this.setConfirmPassword.bind(_assertThisInitialized(_this));
     return _this;
   }
   _createClass(RegisterForm, [{
-    key: "_onChangeValue",
-    value: function _onChangeValue(name, e) {
-      this.updateObject(this.props.registerForm, _defineProperty({}, name, e.target.value));
-    }
-  }, {
-    key: "setConfirmPassword",
-    value: function setConfirmPassword(e) {
-      this.setState({
-        confirmPassword: e.target.value
-      });
-    }
-  }, {
     key: "consumerContent",
     value: function consumerContent() {
-      var _this2 = this;
       var _ref = this.props.registerForm || {},
         username = _ref.username,
         name = _ref.name,
         gender = _ref.gender,
         ethnicity = _ref.ethnicity,
         password = _ref.password,
+        confirmPassword = _ref.confirmPassword,
         codeLanguages = _ref.codeLanguages,
         email = _ref.email,
         notes = _ref.notes;
@@ -32851,9 +32889,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
           root: "register-from-item-input"
         },
         value: username,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("username", e);
-        }
+        onChange: this._onChangeUsername
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
         className: "register-from-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_titleInput_TitleInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -32864,9 +32900,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
           root: "register-from-item-input"
         },
         value: name,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("name", e);
-        }
+        onChange: this._onChangeName
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
         className: "register-from-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_titleInput_TitleInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -32875,9 +32909,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_RadioGroup__WEBPACK_IMPORTED_MODULE_6__["default"], {
         row: true,
         value: gender,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("gender", e);
-        }
+        onChange: this._onChangeGender
       }, GENDER_OPTIONS.map(function (option) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_FormControlLabel__WEBPACK_IMPORTED_MODULE_7__["default"], {
           key: option.value,
@@ -32891,20 +32923,13 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
         label: "Ethnicity"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Select__WEBPACK_IMPORTED_MODULE_9__["default"], {
         value: ethnicity,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("ethnicity", e);
-        },
-        displayEmpty: true,
-        renderValue: function renderValue(selected) {
-          if (!selected) {
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("em", null, "Select Ethnicity");
-          }
-          return selected;
-        }
+        onChange: this._onChangeEthnicity,
+        displayEmpty: true
       }, ETHNICITY_OPTIONS.map(function (option) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10__["default"], {
           key: option.value,
-          value: option.value
+          value: option.value,
+          label: option.label
         }, option.label);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
         className: "register-from-item"
@@ -32917,9 +32942,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
         },
         type: "password",
         value: password,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("password", e);
-        }
+        onChange: this._onChangePassword
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
         className: "register-from-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_titleInput_TitleInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -32930,8 +32953,8 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
           root: "register-from-item-input"
         },
         type: "password",
-        value: this.state.confirmPassword,
-        onChange: this.setConfirmPassword
+        value: confirmPassword,
+        onChange: this._onChangeConfirmPassword
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_checkboxGroup_CheckboxGroup__WEBPACK_IMPORTED_MODULE_4__["default"], {
         className: "register-from-item",
         label: "Code languages",
@@ -32948,9 +32971,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
           root: "register-from-item-input"
         },
         value: email,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("email", e);
-        }
+        onChange: this._onChangeEmail
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
         className: "register-from-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_titleInput_TitleInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -32962,9 +32983,7 @@ var RegisterForm = /*#__PURE__*/function (_BaseConsumer) {
         multiline: true,
         minRows: 2,
         value: notes,
-        onChange: function onChange(e) {
-          return _this2._onChangeValue("notes", e);
-        }
+        onChange: this._onChangeNotes
       }))), this.state.error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
         className: "register-error"
       }, this.state.error), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Button__WEBPACK_IMPORTED_MODULE_11__["default"], {
@@ -92486,9 +92505,10 @@ var HomeRoot = /*#__PURE__*/function (_BasePage) {
       registerForm: {
         username: "",
         password: "",
+        confirmPassword: "",
         name: "",
-        gender: "Male",
-        ethnicity: "",
+        gender: 111,
+        ethnicity: null,
         codeLanguages: [],
         email: "",
         notes: ""

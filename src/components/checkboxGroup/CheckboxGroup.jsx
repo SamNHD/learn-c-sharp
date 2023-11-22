@@ -32,7 +32,7 @@ class CheckboxGroup extends BaseConsumer {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={this.props.value[option.value] || false}
+                  checked={this.props.value.includes(option.value) || false}
                   name={option.value}
                   color="primary"
                   {...others}

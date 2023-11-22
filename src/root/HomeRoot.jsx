@@ -10,9 +10,10 @@ class HomeRoot extends BasePage {
       registerForm: {
         username: "",
         password: "",
+        confirmPassword: "",
         name: "",
-        gender: "Male",
-        ethnicity: "",
+        gender: 111,
+        ethnicity: null,
         codeLanguages: [],
         email: "",
         notes: "",
