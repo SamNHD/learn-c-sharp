@@ -1,8 +1,9 @@
 import { withStyles } from "@mui/styles";
 import { BasePage } from "BaseComponent/BasePage";
 import ReactDOM from "react-dom";
-import HomePage from "../pages/HomePage";
+// import HomePage from "../pages/HomePage";
 import React from "react";
+import ShopPage from "../pages/ShopPage";
 class HomeRoot extends BasePage {
   constructor(props) {
     super(props);
@@ -18,6 +19,12 @@ class HomeRoot extends BasePage {
         email: "",
         notes: "",
       },
+      shopPage: {
+        searchValue: "",
+        productTypes: [],
+        brands: [],
+        price: 200,
+      },
     };
   }
 
@@ -26,8 +33,9 @@ class HomeRoot extends BasePage {
   }
 
   childrenRender() {
-    const { registerForm } = this.state;
-    return <HomePage registerForm={registerForm} />;
+    const { registerForm, shopPage } = this.state;
+    // return <HomePage registerForm={registerForm} />;
+    return <ShopPage data={shopPage} />;
   }
 }
 

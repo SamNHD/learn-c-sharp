@@ -22,11 +22,13 @@ class CheckboxGroup extends BaseConsumer {
     } = this.props;
     return (
       <div className={classNames("checkbox-group", className)}>
-        <TitleInput
-          label={label}
-          required={required}
-          className={titleClassName}
-        />
+        {label && (
+          <TitleInput
+            label={label}
+            required={required}
+            className={titleClassName}
+          />
+        )}
         <div className="checkbox-group-content">
           {options.map((option) => (
             <FormControlLabel
