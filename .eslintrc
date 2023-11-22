@@ -1,0 +1,46 @@
+{
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false,
+        "babelOptions": {
+            "presets": [
+                "@babel/preset-react"
+            ]
+        }
+    },
+    "ignorePatterns": [
+        "webpack.config.js",
+        "node_modules/"
+    ],
+    "plugins": [
+        "unused-imports"
+    ],
+    "rules": {
+        "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "off",
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "react/jsx-key": "off",
+        "react/jsx-no-target-blank": "off",
+        "react/prop-types": "off",
+        "react/no-children-prop": "off",
+        "react/no-unknown-property": "off",
+        "react/no-unescaped-entities": "off",
+        "react/jsx-no-duplicate-props": "off",
+        "react/jsx-no-undef": "off",
+        "react/no-find-dom-node": "off",
+        "react/display-name": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/require-render-return": "off"
+    },
+    "extends": [
+        "plugin:react/recommended"
+    ]
+}

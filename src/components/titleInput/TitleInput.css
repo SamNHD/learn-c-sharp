@@ -1,0 +1,12 @@
+.title-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.title-input-label {
+  font-weight: 600;
+}
+.title-input-require {
+  margin-left: 4px;
+  color: red;
+}

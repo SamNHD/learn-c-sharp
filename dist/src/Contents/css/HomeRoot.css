@@ -1,0 +1,53 @@
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../nodejs/node_modules/css-loader/dist/cjs.js!../../../nodejs/node_modules/resolve-url-loader/index.js!../../../nodejs/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/components/titleInput/TitleInput.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+.title-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.title-input-label {
+  font-weight: 600;
+}
+
+.title-input-require {
+  margin-left: 4px;
+  color: red;
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../nodejs/node_modules/css-loader/dist/cjs.js!../../../nodejs/node_modules/resolve-url-loader/index.js!../../../nodejs/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/components/form/registerForm/RegisterForm.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+.register {
+  width: 500px;
+}
+
+.register-title {
+  text-align: center;
+}
+
+.register-from-item + .register-from-item {
+  margin-top: 16px;
+}
+
+.register-from-item-input {
+  width: 100%;
+}
+
+.MuiOutlinedInput-root {
+  width: 100%;
+  height: 32px;
+}
+
+.register-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.register-submit {
+  width: 100%;
+  height: 40px;
+  margin-top: 24px;
+}

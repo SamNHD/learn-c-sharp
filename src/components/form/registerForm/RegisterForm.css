@@ -1,0 +1,27 @@
+.register {
+  width: 500px;
+}
+.register-title {
+  text-align: center;
+}
+.register-from-item + .register-from-item {
+  margin-top: 16px;
+}
+.register-from-item-input {
+  width: 100%;
+}
+.MuiOutlinedInput-root {
+  width: 100%;
+  height: 32px;
+}
+.register-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+}
+.register-submit {
+  width: 100%;
+  height: 40px;
+  margin-top: 24px;
+}
