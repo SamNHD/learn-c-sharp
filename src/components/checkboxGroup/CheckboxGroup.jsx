@@ -18,6 +18,7 @@ class CheckboxGroup extends BaseConsumer {
       required,
       className,
       titleClassName,
+      vertical,
       ...others
     } = this.props;
     return (
@@ -29,7 +30,7 @@ class CheckboxGroup extends BaseConsumer {
             className={titleClassName}
           />
         )}
-        <div className="checkbox-group-content">
+        <div style={vertical ? { display: "grid" } : {}}>
           {options.map((option) => (
             <FormControlLabel
               control={

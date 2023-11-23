@@ -4,6 +4,18 @@ import ReactDOM from "react-dom";
 // import HomePage from "../pages/HomePage";
 import React from "react";
 import ShopPage from "../pages/ShopPage";
+import { PRODUCTS } from "../constant";
+import GlobalStyles from "@mui/material/GlobalStyles";
+import Navbar from "../components/Navbar";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#000",
+    },
+  },
+});
 class HomeRoot extends BasePage {
   constructor(props) {
     super(props);
@@ -21,9 +33,11 @@ class HomeRoot extends BasePage {
       },
       shopPage: {
         searchValue: "",
-        productTypes: [],
+        types: [],
         brands: [],
         price: 200,
+        productsFilter: [],
+        products: [],
       },
     };
   }
@@ -35,7 +49,22 @@ class HomeRoot extends BasePage {
   childrenRender() {
     const { registerForm, shopPage } = this.state;
     // return <HomePage registerForm={registerForm} />;
-    return <ShopPage data={shopPage} />;
+    return (
+      <ThemeProvider theme={theme}>
+        <GlobalStyles
+          styles={{
+            "*": {
+              fontFamily: "cursive !important",
+              margin: 0,
+              padding: 0,
+              boxSizing: "border-box",
+            },
+          }}
+        />
+        <Navbar products={shopPage.products} />
+        <ShopPage data={shopPage} />
+      </ThemeProvider>
+    );
   }
 }
 
